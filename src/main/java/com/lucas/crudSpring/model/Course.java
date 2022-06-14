@@ -1,5 +1,6 @@
 package com.lucas.crudSpring.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @JsonProperty("_id")
     private Long id;
 
     @Column (length = 200, nullable = false)
