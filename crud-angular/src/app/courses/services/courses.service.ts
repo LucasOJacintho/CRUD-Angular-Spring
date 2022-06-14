@@ -16,6 +16,6 @@ private readonly API = 'http://localhost:8080/api/courses';
   list() {
     return this.
     httpClient.get<Course[]>(this.API)
-    .pipe(first(),delay(1000),tap(courses => console.log(courses)));
+    .pipe(first(),delay(200),tap(courses => console.log(courses)));
   };
 }
