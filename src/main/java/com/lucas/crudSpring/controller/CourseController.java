@@ -20,6 +20,7 @@ public class CourseController {
         return courseRepository.findAll();
     }
     @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
     public void create(@RequestBody Course course){
         courseRepository.save(course);
     }

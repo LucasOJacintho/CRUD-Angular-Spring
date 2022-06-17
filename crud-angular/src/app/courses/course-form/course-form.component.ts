@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { CoursesService } from './../services/courses.service';
 
@@ -26,7 +28,13 @@ export class CourseFormComponent implements OnInit {
     {value: 'Dados', viewValue: 'Dados'},
   ];
 
-  constructor(private formBuilder: FormBuilder, private courseService: CoursesService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private courseService: CoursesService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private location: Location,
+    ){
     this.form = this.formBuilder.group({
       name: [null],
       category: [null],
@@ -37,15 +45,26 @@ export class CourseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.courseService.save(this.form.value).subscribe((result: any) => console.log(result));
+    this.courseService
+    .save(this.form.value)
+    .subscribe(result => this.onSucess(),error => this.onError());
   }
 
   onCancel() {
-    return null;
+    this.location.back();
   }
 
   onInit(){
     this.router.navigate(['']);
+  }
+
+  private onError() {
+    this.snackBar.open( 'Erro ao salvar curso','', {duration:3000});
+  }
+
+  private onSucess() {
+    this.snackBar.open('Curso criado com sucesso','',{duration: 3000})
+    this.location.back();
   }
 
 }
